@@ -37,7 +37,7 @@ namespace MatchGame
         {
             tenthsOfSecondsElapsed--;
             timeTextBlock.Text = (tenthsOfSecondsElapsed / 10F).ToString("0.0c");//Записываю время в таком-то формате и переобразовываю в строку
-            if ((matchesFound == 8 | (tenthsOfSecondsElapsed == 0))) //Если найдены 8 пар то
+            if ((matchesFound == 8 | (tenthsOfSecondsElapsed < 1))) //Если найдены 8 пар или время равно 0 то
             {
                 timer.Stop();
                 timeTextBlock.Text = timeTextBlock.Text + " - Играть снова?";
@@ -91,7 +91,7 @@ namespace MatchGame
                 matchesFound++; //Считает кол-во пар
                 textBlock.Visibility = Visibility.Hidden; //Делаю невидимым объект
                 findingMatch = false; //Меняю на 1 шелчок
-                tenthsOfSecondsElapsed += 10;//Прибавляю время 1 с за пару
+                if (matchesFound < 8) tenthsOfSecondsElapsed += 10;//Прибавляю время 1 с за пару
             }
             else //Иначе.... Т.е. Если текст разный на 2 щелчок то
             {
@@ -102,7 +102,7 @@ namespace MatchGame
 
         private void TimeTextBlock_MouseDown(object sender, MouseButtonEventArgs e)//Метод кликанья на таймер для начала новой игры
         {
-            if ((matchesFound == 8 | (tenthsOfSecondsElapsed == 0)))  //Если нашёл 8 пар
+            if ((matchesFound == 8 | (tenthsOfSecondsElapsed < 1)))  //Если нашёл 8 пар
             {
                 SetUpGame();//Начинает игру по новой
             }
